@@ -76,7 +76,7 @@ const SignIn = () => {
                     />
                   </FormControl>
                   <FormDescription>
-                    We'll never share your email.
+                    We&apos;ll never share your email.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -92,7 +92,7 @@ const SignIn = () => {
                     <Input type="password" {...field} placeholder="********" />
                   </FormControl>
                   <FormDescription>
-                    We'll never share your password.
+                    We&apos;ll never share your password.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>

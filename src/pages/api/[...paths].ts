@@ -1,16 +1,17 @@
-import env from "@/lib/env";
-import axios, { AxiosError } from "axios";
+import serverApi from "@/lib/server-api";
+import { AxiosError } from "axios";
 import { NextApiHandler } from "next";
 
 const handler: NextApiHandler = async (req, res) => {
-  const path = req.query.path as string;
+  const { paths, ...query } = req.query as { paths: string[] };
+  const path = "/" + paths.join("/");
   const method = req.method?.toLowerCase();
-  const url = new URL(path, new URL("/api", env.API_URL).toString()).toString();
   const token = req.cookies.auth;
+  const queryParams = new URLSearchParams(query).toString();
 
   try {
-    const response = await axios({
-      url,
+    const response = await serverApi({
+      url: `${path}?${queryParams}`,
       method,
       data: req.body,
       headers: {

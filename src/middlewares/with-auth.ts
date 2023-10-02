@@ -1,9 +1,24 @@
+import { IUser } from "@/interfaces/user";
 import env from "@/lib/env";
 import axios from "axios";
-import { GetServerSideProps } from "next";
+import {
+  GetServerSideProps,
+  GetServerSidePropsContext,
+  GetServerSidePropsResult,
+} from "next";
 
-const withAuth = (): GetServerSideProps => {
-  return async (ctx) => {
+interface CustomGetServerSidePropsContext extends GetServerSidePropsContext {
+  user?: IUser;
+}
+
+type CustomGetServerSideProps = (
+  ctx: CustomGetServerSidePropsContext,
+) => Promise<GetServerSidePropsResult<any>>;
+
+const withAuth = (
+  getServerSideProps?: CustomGetServerSideProps,
+): GetServerSideProps => {
+  return async (ctx: CustomGetServerSidePropsContext) => {
     const token = ctx.req.cookies.auth;
 
     if (!token) {
@@ -23,11 +38,19 @@ const withAuth = (): GetServerSideProps => {
         },
       });
 
-      return {
-        props: {
-          user: response.data,
-        },
-      };
+      const user = response.data;
+
+      if (!getServerSideProps) {
+        return {
+          props: {
+            user,
+          },
+        };
+      }
+
+      ctx.user = user;
+
+      return await getServerSideProps(ctx);
     } catch (err) {
       ctx.res.setHeader("Set-Cookie", `auth=; path=/; Max-Age: 0`);
 

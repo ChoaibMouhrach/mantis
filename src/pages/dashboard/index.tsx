@@ -1,30 +1,13 @@
-import { Button } from "@/components/ui/button";
-import useSignOut from "@/hooks/use-sign-out";
+import LayoutDashboard from "@/components/layouts/dashboard";
+import { IUser } from "@/interfaces/user";
 import withAuth from "@/middlewares/with-auth";
-import { useRouter } from "next/router";
-import { toast } from "sonner";
 
-const Dashboard: React.FC = () => {
-  const { mutate: signOut, isLoading } = useSignOut();
-  const router = useRouter();
+interface DashboardProps {
+  user: IUser;
+}
 
-  async function handleSignOut() {
-    signOut(undefined, {
-      onSuccess: () => {
-        toast.success("Sign Out Success");
-        router.push("/");
-      },
-      onError: (err) => {
-        toast.error(err.response?.data?.message || "Sign Out Failed");
-      },
-    });
-  }
-
-  return (
-    <Button onClick={handleSignOut} isLoading={isLoading}>
-      Sign Out
-    </Button>
-  );
+const Dashboard: React.FC<DashboardProps> = ({ user }) => {
+  return <LayoutDashboard user={user}></LayoutDashboard>;
 };
 
 export const getServerSideProps = withAuth();
