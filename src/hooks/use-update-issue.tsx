@@ -9,6 +9,7 @@ export const updateIssueSchema = z.object({
   title: z.string().nonempty().max(255),
   labels: z.array(z.string().nonempty().max(255)).nonempty(),
   category_id: z.string().nonempty().max(255),
+ solved: z.boolean(),
   description: z
     .string()
     .max(1000)

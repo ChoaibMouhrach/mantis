@@ -38,7 +38,7 @@ const SignUp = () => {
     signUp(data, {
       onSuccess: () => {
         toast.success("Sign Up Success");
-        router.push("/dashboard");
+        router.push("/dashboard/apps");
       },
       onError: (err) => {
         toast.error(err.response?.data?.message || "Sign Up Failed");

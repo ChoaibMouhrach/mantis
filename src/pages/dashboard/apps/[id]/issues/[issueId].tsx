@@ -100,6 +100,7 @@ const EditForm: React.FC<EditFormProps> = ({ changeSearch, issue, categories }) 
       description: issue.description ?? undefined,
       labels: issue.labels?.map((label) => label.value) as never,
       category_id: String(issue.category_id),
+      solved: issue.solved
     },
   });
 
@@ -201,6 +202,32 @@ const EditForm: React.FC<EditFormProps> = ({ changeSearch, issue, categories }) 
                 </FormItem>
               )}
             />
+
+            <FormField
+              name="solved"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Solved</FormLabel>
+                  <ComboBox
+                    defaultValue={field.value ? "true" : "false"}
+                    onValueChange={(v) => field.onChange(v === "true")}
+                    items={[
+                      {
+                        label: "Resolved",
+                        value: "true",
+                      },
+                      {
+                        label: "Unresolved",
+                        value: "false",
+                      }
+                    ]}
+                  />
+                  <FormDescription>The state of the issue.</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
           </DashboardCardContent>
           <DashboardCardFooter>
             <Button isLoading={isLoading}>

@@ -9,6 +9,7 @@ export interface IIssue {
   created_at: string;
   updated_at: string;
   category: ICategory;
+  solved: boolean;
   labels: {
     id: number;
     value: string;

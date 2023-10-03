@@ -22,7 +22,7 @@ const withGuest = (): GetServerSideProps => {
 
       return {
         redirect: {
-          destination: "/dashboard",
+          destination: "/dashboard/apps",
           permanent: true,
         },
       };

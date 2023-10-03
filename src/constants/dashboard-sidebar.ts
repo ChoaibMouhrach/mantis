@@ -16,11 +16,6 @@ export interface DashboardSideBarLink {
 
 const dashboardSideBarLinks: DashboardSideBarLink[] = [
   {
-    title: "Dashboard",
-    icon: LayoutDashboard,
-    link: "/dashboard",
-  },
-  {
     title: "Apps",
     icon: AppWindow,
     link: "/dashboard/apps",

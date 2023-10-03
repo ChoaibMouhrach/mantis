@@ -22,6 +22,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import DashboardCardSkeleton from "@/components/shared/dashboard-skeleton";
+import { Badge } from "@/components/ui/badge";
 
 type Columns = (id: number) => ColumnDef<IIssue>[];
 
@@ -41,6 +42,10 @@ const issuesColumns: Columns = (id) => [
   {
     header: "Created At",
     cell: ({ row: { original } }) => moment(original.created_at).fromNow(),
+  },
+  {
+    header: "Solved",
+    cell: ({ row: { original } }) => original.solved ? <Badge>Closed</Badge> : <Badge variant="destructive" >Open</Badge>,
   },
   {
     id: "Actions",
